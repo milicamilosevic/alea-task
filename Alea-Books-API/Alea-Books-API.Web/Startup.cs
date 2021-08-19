@@ -52,6 +52,7 @@ namespace Alea_Books_API.Web
                 options.SignIn.RequireConfirmedEmail = false;
                 options.Lockout.AllowedForNewUsers = false;
             })
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<BooksDbContext>()
             .AddSignInManager<SignInManager<IdentityUser>>()
             .AddDefaultTokenProviders();

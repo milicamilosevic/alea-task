@@ -26,20 +26,6 @@ namespace Alea_Books_API.Web.Controllers
             _configuration = configuration;
         }
 
-        [HttpGet]
-        //[AllowAnonymous]
-        public async Task<IActionResult> Test()
-        {
-            //var userRole = new IdentityRole
-            //{
-            //    Name = "User"
-            //};
-            //await _roleManager.CreateAsync(userRole);
-            //var user = await _userManager.FindByEmailAsync("jubo@jubasin.com");
-            //var result = await _userManager.AddToRoleAsync(user, "User");
-            return Ok("Test");
-        }
-
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Authenticate(Authenticate_RequestModel request)
@@ -54,9 +40,7 @@ namespace Alea_Books_API.Web.Controllers
             }
             else
             {
-                //var issuer = _configuration["TokenConstants:Issuer"];
-                //var audience = _configuration["TokenConstants:Audience"];
-                var secret = _configuration["TokenConstants:Secret"]; //TODO: Use user secrets for this
+                var secret = _configuration["TokenConstants:Secret"];
 
                 var claims = new[]
                 {
@@ -98,8 +82,9 @@ namespace Alea_Books_API.Web.Controllers
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
+            await _userManager.AddToRoleAsync(user, "User");
 
-            return Ok(result);
+            return result.Succeeded ? Ok(user) : BadRequest(result);
         }
     }
 }
