@@ -6,6 +6,10 @@ import DetailsPage from "../pages/DetailsPage";
 
 const routes = [
 	{
+		path: "/",
+		redirect: "/auth",
+	},
+	{
 		name: "Auth",
 		path: "/auth",
 		component: AuthPage,

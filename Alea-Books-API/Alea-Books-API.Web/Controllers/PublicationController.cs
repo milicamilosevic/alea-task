@@ -3,6 +3,7 @@ using Alea_Books_API.Web.Data.Models;
 using Alea_Books_API.Web.Dtos;
 using Alea_Books_API.Web.RequestModels;
 using Alea_Books_API.Web.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,6 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 

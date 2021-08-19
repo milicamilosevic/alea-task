@@ -23,6 +23,7 @@
 <script>
 	import NavbarItem from "./NavbarItem";
 	import { useStore } from "vuex";
+	import { useRouter } from "vue-router";
 
 	export default {
 		components: {
@@ -30,9 +31,11 @@
 		},
 		setup() {
 			const store = useStore();
+			const router = useRouter();
 
 			const logoutHandler = () => {
 				store.dispatch("setLoggedOut");
+				router.push("/auth");
 			};
 
 			return {
