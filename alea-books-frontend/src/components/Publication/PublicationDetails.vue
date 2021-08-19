@@ -21,8 +21,12 @@
 				</div>
 			</div>
 		</div>
+		<div class="rating">
+			<span>{{ publication.rating }}</span>
+			<i class="fa fa-star" aria-hidden="true"></i>
+		</div>
 	</div>
-	<div v-else>
+	<div v-if="notFound">
 		Nije pronađeno
 	</div>
 </template>
@@ -37,6 +41,7 @@
 		},
 		setup(props) {
 			const publication = ref();
+			const notFound = ref(false);
 
 			const releaseDate = computed(() => {
 				const date = new Date(publication.value.publishedOn);
@@ -47,9 +52,14 @@
 
 			const handleFetchDetails = () => {
 				if (props.publicationId) {
-					axios.get(`/publication/get?id=${props.publicationId}`).then((response) => {
-						publication.value = response.data;
-					});
+					axios
+						.get(`/publication/get?id=${props.publicationId}`)
+						.then((response) => {
+							publication.value = response.data;
+						})
+						.catch(() => {
+							notFound.value = true;
+						});
 				}
 			};
 
@@ -58,6 +68,7 @@
 			return {
 				publication,
 				releaseDate,
+				notFound,
 			};
 		},
 	};
@@ -117,5 +128,13 @@
 	.release-date label {
 		margin-right: 5px;
 		font-weight: bold;
+	}
+
+	.rating {
+		display: flex;
+		flex-direction: row;
+	}
+	.rating span {
+		margin-right: 5px;
 	}
 </style>

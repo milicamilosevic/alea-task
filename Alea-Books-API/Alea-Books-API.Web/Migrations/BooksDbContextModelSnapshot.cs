@@ -75,8 +75,8 @@ namespace Alea_Books_API.Web.Migrations
 
             modelBuilder.Entity("Alea_Books_API.Web.Data.Models.Rating", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("PublicationId")
                         .HasColumnType("int");
@@ -316,7 +316,7 @@ namespace Alea_Books_API.Web.Migrations
             modelBuilder.Entity("Alea_Books_API.Web.Data.Models.Publication", b =>
                 {
                     b.HasOne("Alea_Books_API.Web.Data.Models.Writer", "Author")
-                        .WithMany("Publications")
+                        .WithMany()
                         .HasForeignKey("AuthorId");
 
                     b.HasOne("Alea_Books_API.Web.Data.Models.PublicationType", "Type")
@@ -377,11 +377,6 @@ namespace Alea_Books_API.Web.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Alea_Books_API.Web.Data.Models.Writer", b =>
-                {
-                    b.Navigation("Publications");
                 });
 #pragma warning restore 612, 618
         }

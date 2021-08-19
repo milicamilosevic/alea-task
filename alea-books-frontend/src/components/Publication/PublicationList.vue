@@ -21,7 +21,7 @@
 
 			const fetchPublications = () => {
 				axios
-					.get(`publication/gettoprated?type=${props.publicationType}&pageSize=10`)
+					.get(`publication/gettoprated?type=${props.publicationType}`)
 					.then((response) => {
 						console.log("Knjige", response.data);
 						publications.value = response.data;

@@ -8,7 +8,7 @@
 			{{ `${publication.author.firstName} ${publication.author.lastName}` }}
 		</div>
 		<div class="rating">
-			<span>4.5</span>
+			<span>{{ publication.rating }}</span>
 			<i class="fa fa-star" aria-hidden="true"></i>
 		</div>
 	</div>
