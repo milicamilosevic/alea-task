@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Alea_Books_API.Web.Controllers
@@ -127,6 +128,12 @@ namespace Alea_Books_API.Web.Controllers
 
             double rating = ratings.Count > 0 ? ratings.Average() : 0;
 
+            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            double userRating = _context.Ratings
+                .Where(e => e.UserId == userId && e.PublicationId == publication.Id)
+                .Select(e => e.Stars)
+                .FirstOrDefault();
+
             return Ok(new PublicationDto
             {
                 Author = publication.Author,
@@ -135,8 +142,37 @@ namespace Alea_Books_API.Web.Controllers
                 Description = publication.Description,
                 Image = publication.Image,
                 PublishedOn = publication.PublishedOn,
-                Title = publication.Title
+                Title = publication.Title,
+                UserRating = Convert.ToDecimal(userRating)
             });
+        }
+
+        [HttpPost]
+        public IActionResult Rate(RatePublication_RequestModel request)
+        {
+            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var rating = _context.Ratings
+                .Where(e => e.PublicationId == request.PublicationId && e.UserId == userId)
+                .FirstOrDefault();
+
+            if(rating == null)
+            {
+                rating = new Rating
+                {
+                    PublicationId = request.PublicationId,
+                    Stars = request.Rating,
+                    UserId = userId
+                };
+                _context.Ratings.Add(rating);
+            }
+            else
+            {
+                rating.Stars = request.Rating;
+                _context.Ratings.Update(rating);
+            }
+            _context.SaveChanges();
+            return Ok(rating);
         }
 
         [HttpPost]

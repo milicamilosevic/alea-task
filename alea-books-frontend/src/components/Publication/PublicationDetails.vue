@@ -20,9 +20,15 @@
 					{{ releaseDate }}
 				</div>
 			</div>
+			<div class="user-rating">
+				<label>Vaša ocjena:</label>
+				{{ publication.userRating }}
+				<input type="number" v-model="enteredRating" />
+				<button @click="submitRating">Ocijeni</button>
+			</div>
 		</div>
 		<div class="rating">
-			<span>{{ publication.rating }}</span>
+			<span>{{ publication.rating.toFixed(2) }}</span>
 			<i class="fa fa-star" aria-hidden="true"></i>
 		</div>
 	</div>
@@ -42,6 +48,8 @@
 		setup(props) {
 			const publication = ref();
 			const notFound = ref(false);
+
+			const enteredRating = ref();
 
 			const releaseDate = computed(() => {
 				const date = new Date(publication.value.publishedOn);
@@ -63,12 +71,25 @@
 				}
 			};
 
+			const submitRating = () => {
+				axios
+					.post("publication/rate", {
+						publicationId: props.publicationId,
+						rating: enteredRating.value,
+					})
+					.then(() => {
+						publication.value.userRating = enteredRating.value;
+					});
+			};
+
 			onMounted(handleFetchDetails);
 
 			return {
 				publication,
 				releaseDate,
 				notFound,
+				enteredRating,
+				submitRating,
 			};
 		},
 	};

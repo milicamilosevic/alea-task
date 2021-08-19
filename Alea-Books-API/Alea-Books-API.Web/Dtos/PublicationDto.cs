@@ -19,5 +19,6 @@ namespace Alea_Books_API.Web.Dtos
         public virtual Writer Author { get; set; }
 
         public decimal Rating { get; set; }
+        public decimal UserRating { get; set; }
     }
 }

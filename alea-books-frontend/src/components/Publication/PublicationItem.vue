@@ -8,7 +8,7 @@
 			{{ `${publication.author.firstName} ${publication.author.lastName}` }}
 		</div>
 		<div class="rating">
-			<span>{{ publication.rating }}</span>
+			<span>{{ publication.rating.toFixed(2) }}</span>
 			<i class="fa fa-star" aria-hidden="true"></i>
 		</div>
 	</div>
