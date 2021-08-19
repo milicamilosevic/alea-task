@@ -21,8 +21,15 @@
 
 <script>
 	import { ref } from "vue";
+	import axios from "../../config/axios-config";
+	import { useStore } from "vuex";
+	import { useRouter } from "vue-router";
+
 	export default {
 		setup() {
+			const store = useStore();
+			const router = useRouter();
+
 			const email = ref("");
 			const password = ref("");
 
@@ -30,7 +37,19 @@
 				event.preventDefault();
 				const enteredEmail = email.value.trim();
 				const enteredPassword = password.value.trim();
-				console.log(enteredEmail, enteredPassword);
+
+				axios
+					.post("user/authenticate", {
+						email: enteredEmail,
+						password: enteredPassword,
+					})
+					.then((response) => {
+						console.log("Odgovor", response);
+						store.dispatch("setLoggedIn", {
+							token: response.data.token,
+						});
+						router.push("/books");
+					});
 			};
 
 			return {

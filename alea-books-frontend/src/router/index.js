@@ -1,6 +1,8 @@
 import { createWebHistory, createRouter } from "vue-router";
 import AuthPage from "../pages/AuthPage";
-import HomePage from "../pages/HomePage";
+import BooksPage from "../pages/BooksPage";
+import ComicBooksPage from "../pages/ComicBooksPage";
+import DetailsPage from "../pages/DetailsPage";
 
 const routes = [
 	{
@@ -9,9 +11,19 @@ const routes = [
 		component: AuthPage,
 	},
 	{
-		name: "Home",
-		path: "/",
-		component: HomePage,
+		name: "Books",
+		path: "/books",
+		component: BooksPage,
+	},
+	{
+		name: "ComicBooks",
+		path: "/comic-books",
+		component: ComicBooksPage,
+	},
+	{
+		name: "Details",
+		path: "/details/:id",
+		component: DetailsPage,
 	},
 ];
 

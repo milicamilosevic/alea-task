@@ -13,8 +13,8 @@ using System.Threading.Tasks;
 namespace Alea_Books_API.Web.Controllers
 {
     [ApiController]
-    [Route("[controller]/[action]")]
-    [Authorize("Jwt")]
+    [Route("api/[controller]/[action]")]
+    [Authorize(Roles = "User")]
     public class UserController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
@@ -81,7 +81,7 @@ namespace Alea_Books_API.Web.Controllers
 
                 var tokenJson = new JwtSecurityTokenHandler().WriteToken(token);
 
-                return Ok(tokenJson);
+                return Ok(new { token = tokenJson });
             }
         }
 
