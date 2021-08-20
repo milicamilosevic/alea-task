@@ -21,8 +21,7 @@
 				</div>
 			</div>
 			<div class="user-rating">
-				<label>Vaša ocjena:</label>
-				{{ publication.userRating }}
+				<label>Vaša ocjena: {{ publication.userRating }} </label>
 				<input type="number" v-model="enteredRating" />
 				<button @click="submitRating">Ocijeni</button>
 			</div>
@@ -157,5 +156,40 @@
 	}
 	.rating span {
 		margin-right: 5px;
+	}
+	.user-rating input {
+		font-size: 16px;
+		width: 10%;
+		margin-right: 10px;
+		outline: none;
+		padding: 2px 5px;
+		border-radius: 3px;
+
+		text-align: right;
+	}
+	.user-rating button {
+		font-size: 14px;
+		padding: 2px 15px;
+		background-color: transparent;
+		border: 2px #90bc71 solid;
+		color: #90bc71;
+		border-radius: 30px;
+		cursor: pointer;
+	}
+	.user-rating button:hover {
+		background-color: rgba(0, 0, 0, 0.1);
+	}
+	.user-rating button:active {
+		box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.3);
+	}
+	.user-rating label {
+		margin-right: 10px;
+		font-weight: bold;
+		padding-top: 5px;
+	}
+	.user-rating {
+		display: flex;
+		margin-top: 10%;
+		justify-content: flex-end;
 	}
 </style>
